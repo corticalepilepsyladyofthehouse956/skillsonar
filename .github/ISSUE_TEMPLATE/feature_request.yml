@@ -1,0 +1,44 @@
+name: Feature request
+description: Suggest a capability or a new rule
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check [ROADMAP.md](https://github.com/hamodywe/skillsonar/blob/main/ROADMAP.md) first — it also lists what is deliberately **not** planned, and why.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: >
+        Describe the situation you are in, not the solution you have in mind.
+        A concrete case where the current tool leaves you stuck is worth more
+        than a feature description.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you have in mind
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried instead
+      description: Existing commands, config options, or other tools.
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints this project holds to
+      description: >
+        These are hard constraints. A proposal that breaks one is not
+        automatically rejected, but it needs to be worth it.
+      options:
+        - label: This would not require a runtime dependency
+        - label: This would remain deterministic — identical input, identical output
+        - label: This would not require a network request or an API key

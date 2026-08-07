@@ -1,0 +1,65 @@
+name: Bug report
+description: Something does not work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The most useful bug reports contain a minimal reproduction — two or three `SKILL.md` files and the command you ran.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, and what it did.
+      placeholder: |
+        $ skillsonar scan .claude/skills
+        ...output...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: >
+        The smallest set of skills that shows the problem. Frontmatter alone is
+        usually enough — bodies are not indexed and rarely matter.
+      render: markdown
+      placeholder: |
+        skills/alpha/SKILL.md
+        ---
+        name: alpha
+        description: Use when ...
+        ---
+
+        skills/bravo/SKILL.md
+        ---
+        name: bravo
+        description: Use when ...
+        ---
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: skillsonar version
+      description: Output of `skillsonar --version`
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Node version and OS
+      placeholder: Node 22.11 on Windows 11
+    validations:
+      required: true

@@ -1,0 +1,65 @@
+{
+  "name": "skillsonar",
+  "version": "0.1.0",
+  "description": "Static routing analysis for AI agent skills — find the collisions that stop SKILL.md files from firing, deterministically and offline.",
+  "keywords": [
+    "agent-skills",
+    "skill-md",
+    "claude-code",
+    "ai-agents",
+    "static-analysis",
+    "linter",
+    "routing",
+    "bm25",
+    "llm-tooling",
+    "developer-tools"
+  ],
+  "homepage": "https://github.com/hamodywe/skillsonar#readme",
+  "bugs": {
+    "url": "https://github.com/hamodywe/skillsonar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamodywe/skillsonar.git"
+  },
+  "license": "MIT",
+  "author": "hamodywe",
+  "type": "module",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "bin": {
+    "skillsonar": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "prepublishOnly": "npm run clean && npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test \"test/*.test.ts\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.ts\"",
+    "selfcheck": "node src/cli.ts scan examples/collision-demo"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

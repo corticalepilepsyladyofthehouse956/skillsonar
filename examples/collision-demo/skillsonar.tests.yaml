@@ -1,0 +1,41 @@
+# Routing regression tests for the demo collection.
+#
+# Run from this directory:
+#   skillsonar test
+#
+# Two of these fail on purpose. That is the point of the demo: the collection
+# contains a real collision, and these tests are what would catch it in CI
+# before it shipped.
+
+tests:
+  - query: reconcile these supplier invoices against our purchase orders
+    expect: invoice-reconcile
+    minMargin: 0.4
+    note: Invoice work has its own vocabulary and should route cleanly.
+
+  - query: add a nullable column to the users table without locking it
+    expect: sql-migration
+    minMargin: 0.3
+    note: >
+      Passes with a 34% margin. The runner-up is invoice-reconcile, matching on
+      the single word "add" from "these numbers do not add up" — visible in
+      `skillsonar route`, which prints the term behind every score. Generic
+      verbs like this are noise in a six-skill collection and vanish as the
+      collection grows, because IDF collapses any term that many skills share.
+
+  - query: map the attack surface of this new service design before we build it
+    expect: threat-model
+    minMargin: 0.3
+    note: threat-model names trust boundaries and architecture; security-review does not.
+
+  - query: extract the tables from this scanned document
+    expect: pdf-extract
+    minMargin: 0.25
+    note: >
+      FAILS BY DESIGN. pdf-extract and document-parser are near-duplicates, so
+      this query splits them by about 8% — arbitrary selection. Fix by giving
+      each description vocabulary the other does not have.
+
+  - query: what is the weather tomorrow
+    expect: none
+    note: Nothing in this collection should claim an unrelated request.

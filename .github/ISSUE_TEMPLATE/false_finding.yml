@@ -1,0 +1,64 @@
+name: Wrong finding (false positive or missed collision)
+description: A rule fired when it should not have, or failed to fire when it should
+labels: [calibration]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These reports are the most valuable contribution to this project. The thresholds are reasoned rather than measured, and they are only as good as the real collections they have been checked against.
+
+        You do not need to share your skills. The descriptions involved and what you expected is enough.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Which way is it wrong?
+      options:
+        - False positive — a finding that is not a real problem
+        - Missed — a real routing problem the tool did not report
+    validations:
+      required: true
+
+  - type: input
+    id: rule
+    attributes:
+      label: Rule id
+      placeholder: SR011
+    validations:
+      required: true
+
+  - type: textarea
+    id: descriptions
+    attributes:
+      label: The descriptions involved
+      description: The `name` and `description` of each skill in the finding.
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why the finding is wrong
+      description: >
+        For a false positive: what distinguishes these skills that the tool cannot
+        see? For a missed collision: what query routes to the wrong one?
+    validations:
+      required: true
+
+  - type: input
+    id: size
+    attributes:
+      label: How many skills are in the collection?
+      description: >
+        This matters a lot. Several thresholds behave differently at different
+        collection sizes, and most calibration bugs are size-dependent.
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output of `skillsonar route "<the query>"`
+      description: Optional, but it usually shows the cause immediately.
+      render: text
