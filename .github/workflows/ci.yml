@@ -24,7 +24,11 @@ jobs:
         # filesystem and compares paths, and case-insensitive filesystems hide
         # a whole class of bug until the tool runs on Linux.
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node: ['20.10', '22', '24']
+        # The suite runs the TypeScript sources directly, which needs the type
+        # stripping that became the default in Node 22.18. The published package
+        # is compiled and supports Node 20.10 -- that is verified by the
+        # `supported-runtime` job below rather than assumed here.
+        node: ['22.18', '24']
 
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +52,31 @@ jobs:
       - name: Verify the built CLI runs
         run: node dist/cli.js --version
 
+  supported-runtime:
+    name: oldest supported runtime (node 20.10)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Build on a modern Node, then run the output on the oldest version the
+      # `engines` field claims to support. This is the only thing that keeps
+      # that claim honest.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.10'
+
+      - name: Run the built CLI on the oldest supported Node
+        run: |
+          node --version
+          node dist/cli.js --version
+          node dist/cli.js scan examples/collision-demo --json > /dev/null || true
   selfcheck:
     name: self-analysis
     runs-on: ubuntu-latest
