@@ -73,6 +73,18 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 /**
+ * Keys used as comments.
+ *
+ * JSON has no comment syntax, so a key beginning with `//` is the established
+ * convention for one. Rejecting them would force users to strip the
+ * explanation of *why* a rule is switched off, which is the most valuable line
+ * in a config file.
+ */
+function isCommentKey(key: string): boolean {
+  return key.trimStart().startsWith('//');
+}
+
+/**
  * Read a bounded number from config.
  *
  * Bounds are enforced rather than merely documented because these values feed
@@ -139,6 +151,7 @@ function parseRules(raw: unknown, path: string): Record<RuleId, RuleSetting> {
   const known = new Set<string>(RULE_IDS);
 
   for (const [key, value] of Object.entries(raw)) {
+    if (isCommentKey(key)) continue;
     if (!known.has(key)) {
       const suggestions = RULE_IDS.filter((id) => RULES[id].title === key);
       const hint = suggestions.length > 0
@@ -245,6 +258,7 @@ export function parseConfig(raw: unknown, path: string): SkillsonarConfig {
   if (!isPlainObject(raw)) throw new ConfigError(path, 'configuration must be a JSON object');
 
   for (const key of Object.keys(raw)) {
+    if (isCommentKey(key)) continue;
     if (!KNOWN_TOP_LEVEL.has(key)) {
       throw new ConfigError(
         path,

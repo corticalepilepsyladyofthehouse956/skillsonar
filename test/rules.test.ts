@@ -310,6 +310,16 @@ test('config rejects an unknown top-level option', () => {
   );
 });
 
+test('config accepts "//" comment keys', () => {
+  // JSON has no comments, so this convention is how a config explains itself.
+  const parsed = parseConfig({
+    '//': 'why SR009 is off for this repository',
+    rules: { '// SR009': 'house style differs', SR009: 'off' },
+  }, 'test.json');
+
+  assert.equal(parsed.rules['SR009'], 'off');
+});
+
 test('an empty config is valid and yields the defaults', () => {
   const parsed = parseConfig({}, 'test.json');
   assert.equal(parsed.rules['SR011'], 'warning');
